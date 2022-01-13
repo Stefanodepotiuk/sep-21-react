@@ -3,67 +3,38 @@ import {useEffect, useState} from "react";
 
 function App() {
 
-
-  let [users,setUsers] = useState([]);
-  let [posts,setPosts] = useState([]);
-  let [comments,setCumments] = useState([]);
+    let [flightslist,setflightslist] = useState();
 
 
-  useEffect(() => {
+    useEffect(() => {
 
-    fetch(`https://jsonplaceholder.typicode.com/users`)
-        .then(value => value.json())
-        .then(value => {
-
-          setUsers(value);
-
-        });
-
-    fetch(`https://jsonplaceholder.typicode.com/posts`)
-        .then(value => value.json())
-        .then(value => {
-
-          setPosts(value);
-
-        });
-
-    fetch(`https://jsonplaceholder.typicode.com/comments`)
-        .then(value => value.json())
-        .then(value => {
-
-          setCumments(value);
-
-        });
+        fetch(`https://api.spacexdata.com/v3/launches`)
+            .then(value => value.json())
+            .then(flights => {
+                let filter = flights.filter(flight => flight.launch_year !== '2020');
+                setflightslist(filter);
 
 
-  }, []);
+            });
 
 
-  return (
-
-   <div className={'good'}>
-     <ul className={'user'}>
-
-       {users.map(value => <li key={value.id}> {value.name}</li>)}
-
-     </ul>
-
-       <ul className={'post'}>
-
-           {posts.map(value => <li key={value.id}> {value.title}</li>)}
-
-       </ul>
-
-       <ul className={'comment'}>
-
-           {comments.map(value => <li key={value.id}> {value.email}</li>)}
-
-       </ul>
-
-   </div>
+    }, []);
 
 
-  );
+    return (
+
+        <div>
+
+            {
+                flightslist.map(value => <div key={value.flight_number}> {value.mission_name} -- {value.launch_year}
+                    <img src={value.links.mission_patch_small} alt={value.flight_number}/>
+                </div>)
+            }
+
+        </div>
+
+
+    );
 }
 
 export default App;
