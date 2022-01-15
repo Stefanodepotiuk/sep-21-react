@@ -1,16 +1,4 @@
-.good{
+.appStyle {
     display: flex;
-    flex-wrap: wrap;
-justify-content: center;
-
-}
-
-.user{
-    width: 400px;
-}
-.post{
-    width: 500px;
-}
-.comment{
-    width: 600px;
+    column-gap: 100px;
 }

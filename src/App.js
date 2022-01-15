@@ -1,69 +1,43 @@
+import React, {useState} from "react";
 import './App.css';
-import {useEffect, useState} from "react";
+
+import UserDetails from "./components/UserDetails/UserDetails";
+import Posts from "./components/Posts/Posts";
+import Users from "./components/Users/Users";
+
 
 function App() {
 
-
-  let [users,setUsers] = useState([]);
-  let [posts,setPosts] = useState([]);
-  let [comments,setCumments] = useState([]);
+    const [user, setUser] = useState(null);
+    const [userId, setUserId] = useState(null);
 
 
-  useEffect(() => {
+    const getUser = (user) => {
+        setUser(user);
+        setUserId(null);
+    }
 
-    fetch(`https://jsonplaceholder.typicode.com/users`)
-        .then(value => value.json())
-        .then(value => {
+    const getUserId = (id) => {
+        setUserId(id);
+    }
 
-          setUsers(value);
+    return (
 
-        });
+        <div>
 
-    fetch(`https://jsonplaceholder.typicode.com/posts`)
-        .then(value => value.json())
-        .then(value => {
+            <div className={'appStyle'}>
 
-          setPosts(value);
+                <Users getUser={getUser}/>
+                {user && <UserDetails user={user} getUserId={getUserId}/>}
 
-        });
+            </div>
 
-    fetch(`https://jsonplaceholder.typicode.com/comments`)
-        .then(value => value.json())
-        .then(value => {
+            {userId && <Posts userId={userId}/>}
 
-          setCumments(value);
-
-        });
+        </div>
 
 
-  }, []);
-
-
-  return (
-
-   <div className={'good'}>
-     <ul className={'user'}>
-
-       {users.map(value => <li key={value.id}> {value.name}</li>)}
-
-     </ul>
-
-       <ul className={'post'}>
-
-           {posts.map(value => <li key={value.id}> {value.title}</li>)}
-
-       </ul>
-
-       <ul className={'comment'}>
-
-           {comments.map(value => <li key={value.id}> {value.email}</li>)}
-
-       </ul>
-
-   </div>
-
-
-  );
+    );
 }
 
 export default App;
