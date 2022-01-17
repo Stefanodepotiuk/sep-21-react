@@ -1,16 +1,13 @@
 import React from 'react';
 
-import './UserStyle.css';
+const User = ({user}) => {
 
-const User = ({user, getUser}) => {
-
-    const {id, name} = user;
+    const {id, name, username, email} = user;
 
     return (
-        <div className={'userStyle'}>
+        <div>
 
-            <div>{id} ) {name}</div>
-            <button onClick={() => getUser(user)}>Details</button>
+            <div>{id} ) {name} - {username} - {email} </div>
 
         </div>
     );

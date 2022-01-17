@@ -1,43 +1,46 @@
-import React, {useState} from "react";
-import './App.css';
-
-import UserDetails from "./components/UserDetails/UserDetails";
-import Posts from "./components/Posts/Posts";
+import React, {useEffect, useState} from 'react';
+import Form from "./components/Form/Form";
 import Users from "./components/Users/Users";
+import {userServices} from "./services/user.services";
 
+const App = () => {
+    const [users, setUsers] = useState([]);
+    const [filteredUsers, setFilteredUsers] = useState([]);
 
-function App() {
+    useEffect(() => {
+        userServices.getAll().then(value => {
+            setUsers([...value])
+            setFilteredUsers([...value])
+        })
+    }, [])
 
-    const [user, setUser] = useState(null);
-    const [userId, setUserId] = useState(null);
+    const getFilter = (inform) => {
+        let filetrArr = [...users];
 
+        if (inform.name) {
+            filetrArr = filetrArr.filter(user => user.name.toLowerCase().includes(inform.name.toLowerCase()))
+        }
 
-    const getUser = (user) => {
-        setUser(user);
-        setUserId(null);
-    }
+        if (inform.username) {
+            filetrArr = filetrArr.filter(user => user.username.toLowerCase().includes(inform.username.toLowerCase()))
+        }
 
-    const getUserId = (id) => {
-        setUserId(id);
+        if (inform.email) {
+            filetrArr = filetrArr.filter(user => user.email.toLowerCase().includes(inform.email.toLowerCase()))
+        }
+
+        setFilteredUsers(filetrArr);
+
     }
 
     return (
-
         <div>
 
-            <div className={'appStyle'}>
-
-                <Users getUser={getUser}/>
-                {user && <UserDetails user={user} getUserId={getUserId}/>}
-
-            </div>
-
-            {userId && <Posts userId={userId}/>}
+            <Form getFilter={getFilter}/>
+            <Users users={filteredUsers}/>
 
         </div>
-
-
     );
-}
+};
 
 export default App;
