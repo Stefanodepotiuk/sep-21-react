@@ -1,43 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import Form from "./components/Form/Form";
-import Users from "./components/Users/Users";
-import {userServices} from "./services/user.services";
+import React from 'react';
+
+
+import {Route, Routes, Link} from "react-router-dom";
+
+import HomePage from "./Pages/HomePage/HomePage";
+import UsersPage from "./Pages/UsersPage/UsersPage";
+import PostsPage from "./Pages/PostsPage/PostsPage";
+import AboutPage from "./Pages/AboutPage/AboutPage";
+import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
+import Layout from "./components/Layout/Layout";
+import SinglPostPage from "./Pages/SinglPostPage/SinglPostPage";
 
 const App = () => {
-    const [users, setUsers] = useState([]);
-    const [filteredUsers, setFilteredUsers] = useState([]);
-
-    useEffect(() => {
-        userServices.getAll().then(value => {
-            setUsers([...value])
-            setFilteredUsers([...value])
-        })
-    }, [])
-
-    const getFilter = (inform) => {
-        let filetrArr = [...users];
-
-        if (inform.name) {
-            filetrArr = filetrArr.filter(user => user.name.toLowerCase().includes(inform.name.toLowerCase()))
-        }
-
-        if (inform.username) {
-            filetrArr = filetrArr.filter(user => user.username.toLowerCase().includes(inform.username.toLowerCase()))
-        }
-
-        if (inform.email) {
-            filetrArr = filetrArr.filter(user => user.email.toLowerCase().includes(inform.email.toLowerCase()))
-        }
-
-        setFilteredUsers(filetrArr);
-
-    }
-
     return (
         <div>
 
-            <Form getFilter={getFilter}/>
-            <Users users={filteredUsers}/>
+            <Routes>
+                <Route path={'/'} element={<Layout/>}>
+
+                    <Route index element={<HomePage/>}/>
+                    <Route path={'users'} element={<UsersPage/>}/>
+
+                    <Route path={'posts'} element={<PostsPage/>}>
+                        <Route path={':id'} element={<SinglPostPage/>}/>
+                    </Route>
+
+                    <Route path={'about'} element={<AboutPage/>}/>
+                    <Route path={'*'} element={<NotFoundPage/>}/>
+
+                </Route>
+            </Routes>
 
         </div>
     );
