@@ -1,37 +1,33 @@
 import React from 'react';
+import {Navigate, Route, Routes} from "react-router-dom"
 
-
-import {Route, Routes, Link} from "react-router-dom";
-
-import HomePage from "./Pages/HomePage/HomePage";
-import UsersPage from "./Pages/UsersPage/UsersPage";
-import PostsPage from "./Pages/PostsPage/PostsPage";
-import AboutPage from "./Pages/AboutPage/AboutPage";
-import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
-import Layout from "./components/Layout/Layout";
-import SinglPostPage from "./Pages/SinglPostPage/SinglPostPage";
+import {Layout} from "./componenta";
+import {PostCommentsPage, PostDetailPage, PostPage, UserDetailsPage, UserPostPage, UsersPage} from "./pages";
 
 const App = () => {
+
     return (
-        <div>
+        <Routes>
 
-            <Routes>
-                <Route path={'/'} element={<Layout/>}>
+            <Route path={'/'} element={<Layout/>}>
+                <Route index element={<Navigate to={'users'}/>}/>
 
-                    <Route index element={<HomePage/>}/>
-                    <Route path={'users'} element={<UsersPage/>}/>
+                <Route path={'users'} element={<UsersPage/>}>
+                    <Route path={':id'} element={<UserDetailsPage/>}>
+                        <Route path={'posts'} element={<UserPostPage/>}/>
+                    </Route>
+                </Route>
 
-                    <Route path={'posts'} element={<PostsPage/>}>
-                        <Route path={':id'} element={<SinglPostPage/>}/>
+                <Route path={'posts'} element={<PostPage/>}>
+                    <Route path={':id'} element={<PostDetailPage/>}>
+                        <Route path={'comments'} element={<PostCommentsPage/>}/>
                     </Route>
 
-                    <Route path={'about'} element={<AboutPage/>}/>
-                    <Route path={'*'} element={<NotFoundPage/>}/>
-
                 </Route>
-            </Routes>
 
-        </div>
+            </Route>
+
+        </Routes>
     );
 };
 

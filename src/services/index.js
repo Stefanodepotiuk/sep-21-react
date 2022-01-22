@@ -1,11 +1,11 @@
 import React from 'react';
 
-const UsersPage = () => {
+const Index = () => {
     return (
         <div>
-Users
+            
         </div>
     );
 };
 
-export default UsersPage;
+export default Index;
