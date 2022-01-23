@@ -2,7 +2,15 @@ import React from 'react';
 import {Navigate, Route, Routes} from "react-router-dom"
 
 import {Layout} from "./componenta";
-import {PostCommentsPage, PostDetailPage, PostPage, UserDetailsPage, UserPostPage, UsersPage} from "./pages";
+import {
+    AlbumsPage, PhotoPage,
+    PostCommentsPage,
+    PostDetailPage,
+    PostPage,
+    UserDetailsPage,
+    UserPostPage,
+    UsersPage
+} from "./pages";
 
 const App = () => {
 
@@ -16,6 +24,11 @@ const App = () => {
                     <Route path={':id'} element={<UserDetailsPage/>}>
                         <Route path={'posts'} element={<UserPostPage/>}/>
                     </Route>
+
+                    <Route path={':id/albums'} element={<AlbumsPage/>}>
+                            <Route path={':albums/photos'} element={<PhotoPage/>}/>
+                    </Route>
+
                 </Route>
 
                 <Route path={'posts'} element={<PostPage/>}>

@@ -9,7 +9,21 @@ const User = ({user: {id, name}}) => {
 
             <div className={'user'}>
                 <div> {id}) {name}</div>
-                <Link to={id.toString()}><button>user details</button></Link>
+
+                <div className={'buttonTwo'}>
+                    <div>
+                        <Link to={id.toString()}>
+                            <button>user details</button>
+                        </Link>
+                    </div>
+
+                    <div>
+                        <Link to={`${id.toString()}/albums`}>
+                            <button>albums</button>
+                        </Link>
+                    </div>
+                </div>
+
             </div>
 
         </div>

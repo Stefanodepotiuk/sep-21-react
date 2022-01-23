@@ -1,6 +1,11 @@
-.user{
-    display:flex;
-    width: 300px;
+.user {
+    display: flex;
+    width: 500px;
     justify-content: space-between;
     margin-top: 3px;
+}
+
+.buttonTwo{
+    display: flex;
+    column-gap: 3px;
 }
