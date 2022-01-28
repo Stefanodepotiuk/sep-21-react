@@ -1,46 +1,64 @@
-import React from 'react';
-import {Navigate, Route, Routes} from "react-router-dom"
+import React, {useReducer} from 'react';
 
-import {Layout} from "./componenta";
-import {
-    AlbumsPage, PhotoPage,
-    PostCommentsPage,
-    PostDetailPage,
-    PostPage,
-    UserDetailsPage,
-    UserPostPage,
-    UsersPage
-} from "./pages";
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'inc':
+            return {...state, count1: state.count1 + 1}
+        case 'dec':
+            return {...state, count1: state.count1 - 1}
+        case 'reset':
+            return {...state, count1: action.payload}
+
+        case 'inc2':
+            return {...state, count2: state.count2 + 1}
+        case 'dec2':
+            return {...state, count2: state.count2 - 1}
+        case 'reset2':
+            return {...state, count2: action.payload}
+
+        case 'inc3':
+            return {...state, count3: state.count3 + 1}
+        case 'dec3':
+            return {...state, count3: state.count3 - 1}
+        case 'reset3':
+            return {...state, count3: action.payload}
+
+        default:
+            throw new Error('Error fuck')
+    }
+
+};
+
 
 const App = () => {
 
+    const [state, dispatch] = useReducer(reducer, {count1: 0, count2: 0, count3: 0});
+
+
     return (
-        <Routes>
+        <div>
 
-            <Route path={'/'} element={<Layout/>}>
-                <Route index element={<Navigate to={'users'}/>}/>
+            <div>{state.count1}/{state.count2}/{state.count3}</div>
 
-                <Route path={'users'} element={<UsersPage/>}>
-                    <Route path={':id'} element={<UserDetailsPage/>}>
-                        <Route path={'posts'} element={<UserPostPage/>}/>
-                    </Route>
+            <div>
+                <button onClick={() => dispatch({type: 'inc'})}>INC</button>
+                <button onClick={() => dispatch({type: 'dec'})}>Dec</button>
+                <button onClick={() => dispatch({type: 'reset', payload: 100500})}>Reset</button>
+            </div>
 
-                    <Route path={':id/albums'} element={<AlbumsPage/>}>
-                            <Route path={':albums/photos'} element={<PhotoPage/>}/>
-                    </Route>
+            <div>
+                <button onClick={() => dispatch({type: 'inc2'})}>INC2</button>
+                <button onClick={() => dispatch({type: 'dec2'})}>Dec2</button>
+                <button onClick={() => dispatch({type: 'reset2', payload: 100600})}>Reset2</button>
+            </div>
 
-                </Route>
+            <div>
+                <button onClick={() => dispatch({type: 'inc3'})}>INC3</button>
+                <button onClick={() => dispatch({type: 'dec3'})}>Dec3</button>
+                <button onClick={() => dispatch({type: 'reset3', payload: 100700})}>Reset3</button>
+            </div>
 
-                <Route path={'posts'} element={<PostPage/>}>
-                    <Route path={':id'} element={<PostDetailPage/>}>
-                        <Route path={'comments'} element={<PostCommentsPage/>}/>
-                    </Route>
-
-                </Route>
-
-            </Route>
-
-        </Routes>
+        </div>
     );
 };
 
