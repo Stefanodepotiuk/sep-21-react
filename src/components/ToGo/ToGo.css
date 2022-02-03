@@ -1,0 +1,12 @@
+.toGo {
+    display: flex;
+    align-items: center;
+    width: 230px;
+    margin-top: 5px;
+    margin-left: 10px;
+    justify-content: space-between;
+}
+
+.check {
+    color: red;
+}
